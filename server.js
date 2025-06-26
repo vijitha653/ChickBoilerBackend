@@ -1,7 +1,8 @@
-const express = require('express');
-const cors = require('cors');
-const fetch = require('node-fetch');
-require('dotenv').config(); // Load environment variables
+import express from 'express';
+import cors from 'cors';
+import fetch from 'node-fetch';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -12,16 +13,12 @@ app.use(express.json());
 app.post('/send-email', async (req, res) => {
   const { to_email } = req.body;
 
-  // Step 1: Log the incoming email address
   console.log('📨 Received email request for:', to_email);
-
-  // Step 2: Log the environment variables (mask sensitive info)
   console.log('🔐 Using EmailJS config:');
   console.log('   Service ID:', process.env.EMAILJS_SERVICE_ID);
   console.log('   Template ID:', process.env.EMAILJS_TEMPLATE_ID);
   console.log('   User ID:', process.env.EMAILJS_USER_ID?.slice(0, 4) + '****');
 
-  // Step 3: Prepare payload and log it
   const payload = {
     service_id: process.env.EMAILJS_SERVICE_ID,
     template_id: process.env.EMAILJS_TEMPLATE_ID,
@@ -45,7 +42,6 @@ app.post('/send-email', async (req, res) => {
 
     const responseText = await response.text();
 
-    // Step 4: Log the full response
     if (!response.ok) {
       console.error('❌ EmailJS error response:', responseText);
       return res.status(500).json({
