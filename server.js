@@ -24,7 +24,7 @@ app.post('/send-email', async (req, res) => {
     template_id: process.env.EMAILJS_TEMPLATE_ID,
     user_id: process.env.EMAILJS_USER_ID,
     template_params: {
-      to_email: to_email
+      user_email: to_email
     }
   };
 
